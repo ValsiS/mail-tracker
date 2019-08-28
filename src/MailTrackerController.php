@@ -47,6 +47,9 @@ class MailTrackerController extends Controller
             ->first();
         if ($tracker) {
             $tracker->clicks++;
+            if($tracker->opens == 0) {
+                $tracker->opens++;
+            }
             $tracker->save();
             $url_clicked = Model\SentEmailUrlClicked::where('url', $url)->where('hash', $hash)->first();
             if ($url_clicked) {
