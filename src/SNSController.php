@@ -59,14 +59,14 @@ class SNSController extends Controller
                 $this->process_bounce($message);
                 if ($message->bounce->bounceType == 'Permanent') {
                     foreach ($message->bounce->bouncedRecipients as $recipient) {
-                        Event::fire(new PermanentBouncedMessageEvent($recipient->emailAddress));
+                        event(new PermanentBouncedMessageEvent($recipient->emailAddress));
                     }
                 }
                 break;
             case 'Complaint':
                 $this->process_complaint($message);
                 foreach ($message->complaint->complainedRecipients as $recipient) {
-                    Event::fire(new PermanentBouncedMessageEvent($recipient->emailAddress));
+                    event(new PermanentBouncedMessageEvent($recipient->emailAddress));
                 }
                 break;
         }
